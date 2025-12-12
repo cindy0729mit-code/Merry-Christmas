@@ -241,7 +241,7 @@ const App: React.FC = () => {
 
   const renderNameForm = () => (
     <div className="absolute inset-0 z-50 bg-black flex flex-col items-center justify-center p-6 overflow-hidden">
-      <div className="absolute inset-0 bg-[url('https://github.com/cindy0729mit-code/Merry-Christmas/raw/refs/heads/main/assets/2.png')] bg-cover bg-center opacity-40 blur-sm"></div>
+      <div className="absolute inset-0 bg-[url('https://github.com/cindy0729mit-code/Merry-Christmas/raw/refs/heads/main/assets/3.png')] bg-cover bg-center opacity-40 blur-sm"></div>
       
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-red-900/20 via-transparent to-green-900/20 pointer-events-none"></div>
 
