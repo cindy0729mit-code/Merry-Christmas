@@ -19,9 +19,8 @@ const FALLBACK_ASSETS = {
 // ============================================================================
 // 📁 您的自定义配置 (YOUR CONFIGURATION)
 // ============================================================================
-// 因为您没有 "public" 文件夹，请按以下方式操作：
 // 1. 图片：去搜索 "图片转Base64"，将转换后以 "data:image..." 开头的长代码粘贴在下方引号里。
-// 2. 视频：请使用网络链接（视频转Base64会让代码太卡）。
+// 2. 视频：请使用网络链接。
 // ============================================================================
 const MEDIA_ASSETS = {
   // 视频建议保持这个在线链接，或者填入您自己的 HTTPS 视频链接
@@ -33,8 +32,12 @@ const MEDIA_ASSETS = {
   // 在这里粘贴您的右边图片 Base64 代码
   usagiRight: "",
   
-  // 在这里粘贴您的音乐链接 (或者 Base64 音频代码)
-  backgroundMusic: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=cosmic-glow-6703.mp3"
+  // 🎵 音乐设置 🎵
+  // 音乐1：第一首播放的歌
+  musicTrack1: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=cosmic-glow-6703.mp3",
+  
+  // 音乐2：第二首播放的歌 (如果留空，会自动重复播放音乐1)
+  musicTrack2: "", 
 };
 
 type AppState = 'intro' | 'form' | 'scene';
@@ -43,9 +46,10 @@ const App: React.FC = () => {
   // --- Global State ---
   const [appState, setAppState] = useState<AppState>('intro');
   const [userName, setUserName] = useState('');
-  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   
-  // --- Audio ---
+  // --- Audio State ---
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   // --- Particle/Game State ---
@@ -70,6 +74,18 @@ const App: React.FC = () => {
     rotationY: 0,
     isDetected: false
   });
+
+  // --- Helper: Asset Resolution ---
+  const getAsset = (custom: string, fallback: string) => {
+    return custom && custom.length > 10 ? custom : fallback;
+  };
+
+  // --- Playlist Logic ---
+  const playlist = [
+    getAsset(MEDIA_ASSETS.musicTrack1, FALLBACK_ASSETS.backgroundMusic),
+    // Only add track 2 if it exists, otherwise just repeat track 1 logic or use fallback if explicitly requested but failed
+    getAsset(MEDIA_ASSETS.musicTrack2, "") 
+  ].filter(url => url !== ""); // Remove empty tracks
 
   // --- Hand Tracking Logic ---
   const handleHandResults = useCallback((data: HandData) => {
@@ -108,6 +124,18 @@ const App: React.FC = () => {
     };
   }, [isCameraEnabled, handleHandResults, appState]);
 
+  // --- Audio Effects ---
+  // When track index changes, if music was playing, ensure the new track starts
+  useEffect(() => {
+    if (isMusicPlaying && audioRef.current) {
+      // Small timeout to allow the src to update
+      const timer = setTimeout(() => {
+        audioRef.current?.play().catch(e => console.warn("Auto-switch play prevented:", e));
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [currentTrackIndex, isMusicPlaying]);
+
   // --- Actions ---
 
   const toggleFullscreen = () => {
@@ -139,22 +167,29 @@ const App: React.FC = () => {
     setIsMusicPlaying(!isMusicPlaying);
   };
 
+  const handleTrackEnd = () => {
+    // Move to next track, loop back to 0 if at end
+    setCurrentTrackIndex((prev) => (prev + 1) % playlist.length);
+  };
+
   const handleEnterExperience = (e: React.FormEvent) => {
     e.preventDefault();
     if (!userName.trim()) return;
     setAppState('scene');
     
+    // Start music
     if (audioRef.current) {
       audioRef.current.volume = 0.5;
-      audioRef.current.play().then(() => setIsMusicPlaying(true)).catch(() => {});
+      audioRef.current.play()
+        .then(() => setIsMusicPlaying(true))
+        .catch(() => {});
     }
   };
 
   // --- Helper: Fallback Handlers ---
   const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>, fallbackUrl: string) => {
-    // Only warn if the user actually tried to set a custom image
     if (e.currentTarget.src !== window.location.href) { 
-       console.warn(`Custom image failed to load (or is empty), using fallback.`);
+       console.warn(`Custom image failed to load, using fallback.`);
     }
     e.currentTarget.src = fallbackUrl;
     e.currentTarget.onerror = null; 
@@ -168,19 +203,20 @@ const App: React.FC = () => {
   };
 
   const handleAudioError = (e: React.SyntheticEvent<HTMLAudioElement, Event>) => {
-    console.warn(`Custom audio failed to load, using fallback.`);
-    e.currentTarget.src = FALLBACK_ASSETS.backgroundMusic;
-    e.currentTarget.load();
-    if(isMusicPlaying) e.currentTarget.play();
+    console.warn(`Audio track failed to load, skipping to next/fallback.`);
+    // If a track fails, try to move to the next one automatically
+    // or if we are already fallback, just stop.
+    if (playlist.length > 1) {
+       handleTrackEnd(); 
+    } else {
+       // Final fallback if everything fails
+       e.currentTarget.src = FALLBACK_ASSETS.backgroundMusic;
+       if(isMusicPlaying) e.currentTarget.play();
+    }
   };
 
   // --- Render Functions ---
   
-  // Logic to determine which asset to use (Custom -> Fallback)
-  const getAsset = (custom: string, fallback: string) => {
-    return custom && custom.length > 10 ? custom : fallback;
-  };
-
   const renderIntroVideo = () => (
     <div className="absolute inset-0 z-50 bg-black flex items-center justify-center">
       <video
@@ -274,10 +310,16 @@ const App: React.FC = () => {
   return (
     <div className="relative w-full h-full bg-black overflow-hidden font-sans">
       
+      {/* 
+         🎵 Audio Element Changes:
+         1. Removed 'loop' attribute so we can detect when a song ends.
+         2. Added 'onEnded' to switch to the next track in the playlist.
+         3. src is now dynamic based on currentTrackIndex.
+      */}
       <audio 
         ref={audioRef} 
-        loop 
-        src={getAsset(MEDIA_ASSETS.backgroundMusic, FALLBACK_ASSETS.backgroundMusic)}
+        src={playlist[currentTrackIndex]}
+        onEnded={handleTrackEnd}
         onError={handleAudioError}
       />
 
