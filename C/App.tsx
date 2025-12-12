@@ -24,20 +24,20 @@ const FALLBACK_ASSETS = {
 // ============================================================================
 const MEDIA_ASSETS = {
   // 视频建议保持这个在线链接，或者填入您自己的 HTTPS 视频链接
-  introVideo: "https://assets.mixkit.co/videos/preview/mixkit-stars-in-space-1610-large.mp4",
+  introVideo: "https://github.com/cindy0729mit-code/Merry-Christmas/raw/refs/heads/main/assets/video.mp4",
   
   // 在这里粘贴您的左边图片 Base64 代码 (data:image/png;base64,......)
-  usagiLeft: "", 
+  usagiLeft: "https://github.com/cindy0729mit-code/Merry-Christmas/raw/refs/heads/main/assets/1.png", 
   
   // 在这里粘贴您的右边图片 Base64 代码
-  usagiRight: "",
+  usagiRight: "https://github.com/cindy0729mit-code/Merry-Christmas/raw/refs/heads/main/assets/2.png",
   
   // 🎵 音乐设置 🎵
   // 音乐1：第一首播放的歌
-  musicTrack1: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=cosmic-glow-6703.mp3",
+  musicTrack1: "https://github.com/cindy0729mit-code/Merry-Christmas/raw/refs/heads/main/assets/1.mp3",
   
   // 音乐2：第二首播放的歌 (如果留空，会自动重复播放音乐1)
-  musicTrack2: "", 
+  musicTrack2: "https://github.com/cindy0729mit-code/Merry-Christmas/raw/refs/heads/main/assets/2.mp3", 
 };
 
 type AppState = 'intro' | 'form' | 'scene';
