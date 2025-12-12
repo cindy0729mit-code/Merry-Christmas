@@ -275,7 +275,7 @@ const App: React.FC = () => {
             Merry Christmas
           </h2>
           <p className="text-white/80 mb-8 text-sm font-medium tracking-wide">
-            Welcome to the LuminaFest
+            Welcome to the DidiSpace
           </p>
           
           <form onSubmit={handleEnterExperience} className="flex flex-col gap-4 relative z-10">
