@@ -35,7 +35,7 @@ export class HandTrackingService {
     // Initialize MediaPipe Hands
     this.hands = new HandsClass({
       locateFile: (file: string) => {
-        return `/mediapipe/${file}`;
+        return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
       },
     });
 
