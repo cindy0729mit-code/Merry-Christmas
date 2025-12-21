@@ -269,7 +269,7 @@ const App: React.FC = () => {
 
         <div className="bg-black/60 backdrop-blur-xl border-2 border-white/20 p-8 pt-10 rounded-[2rem] shadow-[0_0_50px_rgba(255,0,0,0.2)] text-center relative overflow-hidden">
           
-          <div className="absolute inset-0 pointer-events-none opacity-20 bg-[url('https://www.transparenttextures.com/patterns/snow.png')]"></div>
+          <div className="absolute inset-0 pointer-events-none opacity-20 bg-[url('/snow.png')]"></div>
           
           <h2 className="font-serif italic text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-white to-green-400 mb-2 drop-shadow-sm">
             Merry Christmas
