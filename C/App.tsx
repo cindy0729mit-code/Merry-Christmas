@@ -77,7 +77,7 @@ const App: React.FC = () => {
 
   // --- Helper: Asset Resolution ---
   const getAsset = (custom: string, fallback: string) => {
-    return custom && custom.length > 10 ? custom : fallback;
+    return custom && custom.length > 1 ? custom : fallback;
   };
 
   // --- Playlist Logic ---
