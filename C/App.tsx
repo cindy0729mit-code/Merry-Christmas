@@ -24,7 +24,7 @@ const FALLBACK_ASSETS = {
 // ============================================================================
 const MEDIA_ASSETS = {
   // 视频建议保持这个在线链接，或者填入您自己的 HTTPS 视频链接
-  introVideo: "/video.mp4",
+  introVideo: "/ade492c697d2c0658e30aca7cc32e4f9.mp4",
   
   // 在这里粘贴您的左边图片 Base64 代码 (data:image/png;base64,......)
   usagiLeft: "/1.png", 
