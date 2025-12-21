@@ -1,0 +1,7 @@
+{
+  "name": "LuminaFest 3D",
+  "description": "A cinematic, gesture-controlled 3D particle experience for the holidays.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
