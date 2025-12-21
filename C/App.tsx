@@ -24,20 +24,20 @@ const FALLBACK_ASSETS = {
 // ============================================================================
 const MEDIA_ASSETS = {
   // 视频建议保持这个在线链接，或者填入您自己的 HTTPS 视频链接
-  introVideo: "https://github.com/cindy0729mit-code/Merry-Christmas/raw/refs/heads/main/assets/video.mp4",
+  introVideo: "/video.mp4",
   
   // 在这里粘贴您的左边图片 Base64 代码 (data:image/png;base64,......)
-  usagiLeft: "https://github.com/cindy0729mit-code/Merry-Christmas/raw/refs/heads/main/assets/1.png", 
+  usagiLeft: "/1.png", 
   
   // 在这里粘贴您的右边图片 Base64 代码
-  usagiRight: "https://github.com/cindy0729mit-code/Merry-Christmas/raw/refs/heads/main/assets/2.png",
+  usagiRight: "/2.png", 
   
   // 🎵 音乐设置 🎵
   // 音乐1：第一首播放的歌
-  musicTrack1: "https://github.com/cindy0729mit-code/Merry-Christmas/raw/refs/heads/main/assets/1.mp3",
+  musicTrack1: "/1.mp3",
   
   // 音乐2：第二首播放的歌 (如果留空，会自动重复播放音乐1)
-  musicTrack2: "https://github.com/cindy0729mit-code/Merry-Christmas/raw/refs/heads/main/assets/2.mp3", 
+  musicTrack2: "/2.mp3", 
 };
 
 type AppState = 'intro' | 'form' | 'scene';
@@ -241,7 +241,7 @@ const App: React.FC = () => {
 
   const renderNameForm = () => (
     <div className="absolute inset-0 z-50 bg-black flex flex-col items-center justify-center p-6 overflow-hidden">
-      <div className="absolute inset-0 bg-[url('https://github.com/cindy0729mit-code/Merry-Christmas/raw/refs/heads/main/assets/3.png')] bg-cover bg-center opacity-40 blur-sm"></div>
+      <div className="absolute inset-0 bg-[url('/3.png')] bg-cover bg-center opacity-40 blur-sm"></div>
       
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-red-900/20 via-transparent to-green-900/20 pointer-events-none"></div>
 
