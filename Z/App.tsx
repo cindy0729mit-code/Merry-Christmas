@@ -6,16 +6,13 @@ import { ParticleShape, THEME_COLORS, HandData, ShapeColorConfig } from './types
 import { HandTrackingService } from './services/handTracking';
 import { ArrowRight, SkipForward, Gift, Sparkles } from 'lucide-react';
 
-const FALLBACK_ASSETS = {
-  introVideo: "https://assets.mixkit.co/videos/preview/mixkit-stars-in-space-1610-large.mp4",
-  backgroundMusic: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=cosmic-glow-6703.mp3"
-};
-
 const MEDIA_ASSETS = {
-  introVideo: "https://github.com/cindy0729mit-code/Merry-Christmas/raw/refs/heads/main/assets/video.mp4",
-  musicTrack1: "https://github.com/cindy0729mit-code/Merry-Christmas/raw/refs/heads/main/assets/1.mp3",
-  musicTrack2: "https://github.com/cindy0729mit-code/Merry-Christmas/raw/refs/heads/main/assets/2.mp3", 
-  backgroundImage: "https://images.unsplash.com/photo-1543589923-78e35f728335?q=80&w=2070&auto=format&fit=crop" // Beautiful night winter scene
+  introVideo: "/video.mp4",
+  musicTrack1: "/1.mp3",
+  musicTrack2: "/2.mp3", 
+  backgroundImage: "bg.png", // Beautiful night winter scene
+  usagiLeft: "", 
+  usagiRight: ""
 };
 
 type AppState = 'intro' | 'form' | 'scene';
@@ -113,6 +110,82 @@ const App: React.FC = () => {
     setAppState('scene');
   };
 
+  const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>, fallbackUrl: string) => {
+    if (e.currentTarget.src !== window.location.href) { 
+       console.warn(`Custom image failed to load (or is empty), using fallback.`);
+    }
+    e.currentTarget.src = fallbackUrl;
+    e.currentTarget.onerror = null; 
+  };
+
+  const renderNameForm = () => (
+    <div className="absolute inset-0 z-50 bg-black flex flex-col items-center justify-center p-6 overflow-hidden">
+      <div className="absolute inset-0 bg-[url('/bg1.png')] bg-cover bg-center opacity-40 blur-sm"></div>
+      
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-red-900/20 via-transparent to-green-900/20 pointer-events-none"></div>
+
+      <div className="relative z-10 w-full max-w-sm transform transition-all">
+        
+        <div className="flex justify-between items-end px-2 -mb-8 relative z-20">
+          <img 
+            src={getAsset(MEDIA_ASSETS.usagiLeft, FALLBACK_ASSETS.usagiLeft)}
+            alt="Decoration Left" 
+            className="w-24 h-24 object-contain animate-bounce drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"
+            style={{ animationDuration: '2s' }}
+            onError={(e) => handleImgError(e, FALLBACK_ASSETS.usagiLeft)}
+          />
+           <div className="mb-8 animate-pulse text-yellow-300">
+             <Sparkles size={32} />
+           </div>
+          <img 
+            src={getAsset(MEDIA_ASSETS.usagiRight, FALLBACK_ASSETS.usagiRight)}
+            alt="Decoration Right" 
+            className="w-24 h-24 object-contain animate-bounce drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"
+            style={{ animationDuration: '2.5s', animationDelay: '0.2s' }}
+            onError={(e) => handleImgError(e, FALLBACK_ASSETS.usagiRight)}
+          />
+        </div>
+
+        <div className="bg-black/60 backdrop-blur-xl border-2 border-white/20 p-8 pt-10 rounded-[2rem] shadow-[0_0_50px_rgba(255,0,0,0.2)] text-center relative overflow-hidden">
+          
+          <div className="absolute inset-0 pointer-events-none opacity-20 bg-[url('/snow.png')]"></div>
+          
+          <h2 className="font-serif italic text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-white to-green-400 mb-2 drop-shadow-sm">
+            Merry Christmas
+          </h2>
+          <p className="text-white/80 mb-8 text-sm font-medium tracking-wide">
+            Welcome to the LuminaFest
+          </p>
+          
+          <form onSubmit={handleEnterExperience} className="flex flex-col gap-4 relative z-10">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Enter your name..."
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                className="w-full bg-white/10 border-2 border-white/10 rounded-2xl px-4 py-4 text-white placeholder-white/40 text-center text-lg focus:outline-none focus:border-red-400/50 focus:bg-white/20 transition-all shadow-inner"
+                autoFocus
+              />
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20">
+                <Gift size={20} />
+              </div>
+            </div>
+
+            <button 
+              type="submit"
+              disabled={!userName.trim()}
+              className="group w-full bg-gradient-to-r from-red-600 to-red-500 text-white font-bold py-4 rounded-2xl hover:from-red-500 hover:to-red-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-red-900/50 hover:shadow-red-500/30 hover:-translate-y-0.5"
+            >
+              <span>START PARTY</span>
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div 
       className="relative w-full h-full bg-[#010105] overflow-hidden font-sans select-none"
@@ -132,17 +205,7 @@ const App: React.FC = () => {
         </div>
       )}
 
-      {appState === 'form' && (
-        <div className="absolute inset-0 z-50 bg-black flex items-center justify-center p-8 overflow-hidden" onClick={ensureMusicPlays}>
-          <div className="relative z-10 w-full max-w-2xl text-center">
-            <h2 className="font-serif italic text-5xl md:text-7xl font-bold text-white mb-8 tracking-tight">Merry Christmas</h2>
-            <form onSubmit={handleEnterExperience} className="flex flex-col gap-6 max-w-md mx-auto">
-              <input type="text" placeholder="YOUR NAME" value={userName} onChange={(e) => setUserName(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-white text-center text-xl tracking-widest focus:outline-none focus:border-white/30 transition-all" autoFocus />
-              <button type="submit" disabled={!userName.trim()} className="w-full bg-white text-black font-bold py-5 rounded-2xl hover:bg-white/90 transition-all disabled:opacity-20 tracking-widest">ENTER EXPERIENCE</button>
-            </form>
-          </div>
-        </div>
-      )}
+      {appState === 'form' && renderNameForm()}
       
       {appState === 'scene' && (
         <div className="w-full h-full animate-in fade-in duration-1000 relative">
