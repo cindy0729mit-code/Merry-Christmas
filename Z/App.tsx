@@ -31,7 +31,7 @@ const App: React.FC = () => {
 
   const [colorConfig, setColorConfig] = useState<ShapeColorConfig>({
     [ParticleShape.STAR]: THEME_COLORS.gold,
-    [ParticleShape.HEART]: ‘#B0312A', 
+    [ParticleShape.HEART]: '#B0312A', 
     [ParticleShape.SNOW]: '#FFFFFF', 
     [ParticleShape.ORB]: '#1E4027', 
     spiral: THEME_COLORS.champagne 
