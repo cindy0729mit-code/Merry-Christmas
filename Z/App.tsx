@@ -14,7 +14,12 @@ const MEDIA_ASSETS = {
   usagiLeft: "", 
   usagiRight: ""
 };
-
+const FALLBACK_ASSETS = {
+  introVideo: "", // 如果没有备用视频，留空即可
+  backgroundMusic: "/1.mp3", // 默认音乐
+  usagiLeft: "/1.png", // 假设使用 public 文件夹里的图片作为备用
+  usagiRight: "/2.png" // 假设使用 public 文件夹里的图片作为备用
+};
 type AppState = 'intro' | 'form' | 'scene';
 
 const App: React.FC = () => {
