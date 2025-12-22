@@ -238,7 +238,7 @@ const ParticleLayer: React.FC<{
         <BufferAttribute attach="attributes-position" count={positions.length / 3} array={new Float32Array(positions)} itemSize={3} />
       </BufferGeometry>
       <PointsMaterial
-        size={isSpiral ? 0.32 : 0.25}
+        size={isSpiral ? 0.32 : 0.45}
         map={texture}
         color={color}
         transparent={true}
