@@ -192,7 +192,7 @@ const App: React.FC = () => {
 
       {appState === 'intro' && (
         <div className="absolute inset-0 z-50 bg-black flex items-center justify-center cursor-pointer" onClick={ensureMusicPlays}>
-          <video className="w-full h-full object-cover" src={MEDIA_ASSETS.introVideo} autoPlay playsInline muted onEnded={() => setAppState('form')} />
+          <video className="w-full h-full object-cover" src={MEDIA_ASSETS.introVideo} autoPlay playsInline muted preload="auto" onEnded={() => setAppState('form')} />
           <button onClick={() => setAppState('form')} className="absolute bottom-12 right-12 px-8 py-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white text-lg font-medium">Skip Intro</button>
         </div>
       )}
