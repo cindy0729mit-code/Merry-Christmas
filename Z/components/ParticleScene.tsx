@@ -219,7 +219,7 @@ const ParticleLayer: React.FC<{
         if (shape === ParticleShape.SNOW) baseSize *= 1.2;
 
         // 2. 设置动态散开：手张开时，大小增加 6.0 倍
-        material.size = baseSize + (activeOpenness * 2.5); 
+        material.size = baseSize + (activeOpenness * 1.96); 
     }
     for (let i = 0; i < posAttr.length / 3; i++) {
       const i3 = i * 3;
