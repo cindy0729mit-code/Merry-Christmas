@@ -52,14 +52,11 @@ const App: React.FC = () => {
     isDetected: false
   });
 
-  const getAsset = (custom: string, fallback: string) => {
-    return custom && custom.length > 10 ? custom : fallback;
-  };
-
+// 直接使用资源列表里的音乐
   const playlist = [
-    getAsset(MEDIA_ASSETS.musicTrack1, FALLBACK_ASSETS.backgroundMusic),
-    getAsset(MEDIA_ASSETS.musicTrack2, "") 
-  ].filter(url => url !== ""); 
+    MEDIA_ASSETS.musicTrack1,
+    MEDIA_ASSETS.musicTrack2 
+  ].filter(url => url && url.length > 1);
 
   const handleHandResults = useCallback((data: HandData) => {
     const prev = handDataRef.current;
@@ -115,14 +112,6 @@ const App: React.FC = () => {
     setAppState('scene');
   };
 
-  const handleImgError = (e: React.SyntheticEvent<HTMLImageElement, Event>, fallbackUrl: string) => {
-    if (e.currentTarget.src !== window.location.href) { 
-       console.warn(`Custom image failed to load (or is empty), using fallback.`);
-    }
-    e.currentTarget.src = fallbackUrl;
-    e.currentTarget.onerror = null; 
-  };
-
   const renderNameForm = () => (
     <div className="absolute inset-0 z-50 bg-black flex flex-col items-center justify-center p-6 overflow-hidden">
       <div className="absolute inset-0 bg-[url('/bg1.png')] bg-cover bg-center opacity-40 blur-sm"></div>
@@ -133,21 +122,19 @@ const App: React.FC = () => {
         
         <div className="flex justify-between items-end px-2 -mb-8 relative z-20">
           <img 
-            src={getAsset(MEDIA_ASSETS.usagiLeft, FALLBACK_ASSETS.usagiLeft)}
+            src={MEDIA_ASSETS.usagiLeft}
             alt="Decoration Left" 
             className="w-24 h-24 object-contain animate-bounce drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"
             style={{ animationDuration: '2s' }}
-            onError={(e) => handleImgError(e, FALLBACK_ASSETS.usagiLeft)}
           />
            <div className="mb-8 animate-pulse text-yellow-300">
              <Sparkles size={32} />
            </div>
           <img 
-            src={getAsset(MEDIA_ASSETS.usagiRight, FALLBACK_ASSETS.usagiRight)}
+            src={MEDIA_ASSETS.usagiRight}
             alt="Decoration Right" 
             className="w-24 h-24 object-contain animate-bounce drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"
             style={{ animationDuration: '2.5s', animationDelay: '0.2s' }}
-            onError={(e) => handleImgError(e, FALLBACK_ASSETS.usagiRight)}
           />
         </div>
 
@@ -205,7 +192,7 @@ const App: React.FC = () => {
 
       {appState === 'intro' && (
         <div className="absolute inset-0 z-50 bg-black flex items-center justify-center cursor-pointer" onClick={ensureMusicPlays}>
-          <video className="w-full h-full object-cover" src={getAsset(MEDIA_ASSETS.introVideo, FALLBACK_ASSETS.introVideo)} autoPlay playsInline muted onEnded={() => setAppState('form')} />
+          <video className="w-full h-full object-cover" src={MEDIA_ASSETS.introVideo} autoPlay playsInline muted onEnded={() => setAppState('form')} />
           <button onClick={() => setAppState('form')} className="absolute bottom-12 right-12 px-8 py-4 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full text-white text-lg font-medium">Skip Intro</button>
         </div>
       )}
