@@ -17,7 +17,7 @@ export const generateTreePositions = (count: number): TreeGeometry => {
   for (let i = 0; i < coreCount; i++) {
     // 🔴 关键修改 1：把指数从 0.75 改成 0.4
     // 越小的值(如0.4)，会让越多的粒子分布在底部宽阔的区域，缓解顶部密集的问题
-    const t = Math.pow(Math.random(), 0.4); 
+    const t = Math.pow(Math.random(), 0.6); 
     
     const y = (1 - t) * 12 - 6;
     
@@ -47,7 +47,7 @@ export const generateTreePositions = (count: number): TreeGeometry => {
     // 🔴 关键修改 2：给螺旋线也加上权重分布
     // 以前是线性的(t=tLinear)，导致顶部圈小点多，底部圈大点少。
     // 现在用平方根(0.5)，能让点在螺旋线上均匀分布（抵消半径变化的影响）
-    const t = Math.pow(tLinear, 0.55);
+    const t = Math.pow(tLinear, 0.7);
 
     const y = (1 - t) * 12 - 6;
     const angle = t * Math.PI * 15; // 稍微减少一点圈数让它不那么缠绕
