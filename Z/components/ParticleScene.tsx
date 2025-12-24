@@ -197,7 +197,7 @@ const ParticleLayer: React.FC<{
 
   const randomDirs = useMemo(() => {
     const arr = new Float32Array(positions.length);
-    for (let i = 0; i < arr.length; i++) arr[i] = (Math.random() - 0.5) * 12;
+    for (let i = 0; i < arr.length; i++) arr[i] = (Math.random() - 0.5) * 60;
     return arr;
   }, [positions]);
 
@@ -212,14 +212,14 @@ const ParticleLayer: React.FC<{
     
     // 如果材质存在，就修改它的大小
     if (material) {
-        // 1. 设置基础大小：平时就很大 (1.2 ~ 1.5)
-        let baseSize = isSpiral ? 1.5 : 1.2; 
+        // 1. 设置基础大小：平时就很大 
+        let baseSize = isSpiral ? 0.8 : 0.6; 
         
         // 雪花线条细，再额外大一点
-        if (shape === ParticleShape.SNOW) baseSize *= 1.5;
+        if (shape === ParticleShape.SNOW) baseSize *= 1.2;
 
         // 2. 设置动态散开：手张开时，大小增加 6.0 倍
-        material.size = baseSize + (activeOpenness * 2.0); 
+        material.size = baseSize + (activeOpenness * 2.5); 
     }
     for (let i = 0; i < posAttr.length / 3; i++) {
       const i3 = i * 3;
