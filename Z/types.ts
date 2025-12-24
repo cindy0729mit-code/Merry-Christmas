@@ -26,6 +26,6 @@ export const THEME_COLORS = {
   diamond: '#FFFFFF',   
   ruby: '#9A0403',      
   champagne: '#FBF0DC', 
-  violet: '#R02301C',    
+  violet: '#C0B6F9',    
   mint: '#1B7837'       
 };
