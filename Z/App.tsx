@@ -33,7 +33,7 @@ const App: React.FC = () => {
     [ParticleShape.STAR]: THEME_COLORS.gold,
     [ParticleShape.HEART]:THEME_COLORS.rose, 
     [ParticleShape.SNOW]:THEME_COLORS.ruby, 
-    [ParticleShape.ORB]: THEME_COLORS.mint, 
+    [ParticleShape.ORB]: THEME_COLORS.diamond, 
     spiral: THEME_COLORS.diamond 
   });
   
