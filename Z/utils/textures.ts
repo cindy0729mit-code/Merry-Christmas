@@ -48,27 +48,30 @@ export const generateParticleTexture = (type: ParticleShape): THREE.Texture => {
       ctx.closePath();
       ctx.fill();
       break;
-
+    
     case ParticleShape.HEART:
-      // Heart shape
+      // 更饱满经典的爱心形状
       ctx.beginPath();
-      const topCurveHeight = size * 0.3;
-      ctx.moveTo(cx, cy + size * 0.2);
-      // top left curve
+      
+      // 从上方的凹陷处开始
+      ctx.moveTo(cx, cy - size * 0.15); 
+      
+      // 左半边曲线
       ctx.bezierCurveTo(
-        cx - size / 2, cy - topCurveHeight, 
-        cx - size / 2, cy + topCurveHeight / 3, 
-        cx, cy + size * 0.45
+        cx - size * 0.5, cy - size * 0.55,  // 控制点1：左上角撑开，决定饱满度
+        cx - size * 0.55, cy + size * 0.15, // 控制点2：左下收拢
+        cx, cy + size * 0.45                // 终点：最底部的尖角
       );
-      // top right curve
+
+      // 右半边曲线
       ctx.bezierCurveTo(
-        cx + size / 2, cy + topCurveHeight / 3, 
-        cx + size / 2, cy - topCurveHeight, 
-        cx, cy + size * 0.2
+        cx + size * 0.55, cy + size * 0.15, // 控制点1：右下收拢
+        cx + size * 0.5, cy - size * 0.55,  // 控制点2：右上角撑开
+        cx, cy - size * 0.15                // 终点：回到上方凹陷处
       );
+      
       ctx.fill();
       break;
-
     case ParticleShape.SNOW:
       // Simple Snowflake
       ctx.strokeStyle = '#ffffff';
