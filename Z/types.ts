@@ -20,12 +20,12 @@ export interface HandData {
 }
 
 export const THEME_COLORS = {
-  gold: '#D4AF37',      
-  rose: '#E0115F',      
-  emerald: '#043927',   
-  diamond: '#B0C4DE',   
-  ruby: '#700202',      
-  champagne: '#E3D2B4', 
-  violet: '#4B0082',    
-  mint: '#2F4F4F'       
+  gold: '#B8860B',      
+  rose: '#C82033',      
+  emerald: '#1D4C2A',   
+  diamond: '#FFFFFF',   
+  ruby: '#9A0403',      
+  champagne: '#FBF0DC', 
+  violet: '#R02301C',    
+  mint: '#1B7837'       
 };
