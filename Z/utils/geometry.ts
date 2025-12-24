@@ -17,7 +17,7 @@ export const generateTreePositions = (count: number): TreeGeometry => {
   for (let i = 0; i < coreCount; i++) {
     // 🔴 关键修改 1：把指数从 0.75 改成 0.4
     // 越小的值(如0.4)，会让越多的粒子分布在底部宽阔的区域，缓解顶部密集的问题
-    const t = Math.pow(Math.random(), 0.6); 
+    const t = Math.pow(Math.random(), 0.5); 
     
     const y = (1 - t) * 12 - 6;
     
