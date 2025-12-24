@@ -72,7 +72,7 @@ export const generateParticleTexture = (type: ParticleShape): THREE.Texture => {
     case ParticleShape.SNOW:
       // Simple Snowflake
       ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 4;
+      ctx.lineWidth = 12;
       ctx.lineCap = 'round';
       
       for (let i = 0; i < 6; i++) {
