@@ -11,8 +11,8 @@ const MEDIA_ASSETS = {
   musicTrack1: "/1.mp3",
   musicTrack2: "/2.mp3", 
   backgroundImage: "bg.png", // Beautiful night winter scene
-  usagiLeft: "", 
-  usagiRight: ""
+  usagiLeft: "/1.png", 
+  usagiRight: "/2.png"
 };
 const FALLBACK_ASSETS = {
   introVideo: "/video.mp4", // 如果没有备用视频，留空即可
