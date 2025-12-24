@@ -27,5 +27,5 @@ export const THEME_COLORS = {
   ruby: '#92C3EF',      
   champagne: '#FBF0DC', 
   violet: '#C0B6F9',    
-  mint: 'D8B697'       
+  mint: '#D8B697'       
 };
