@@ -32,9 +32,9 @@ const App: React.FC = () => {
   const [colorConfig, setColorConfig] = useState<ShapeColorConfig>({
     [ParticleShape.STAR]: THEME_COLORS.gold,
     [ParticleShape.HEART]:THEME_COLORS.rose, 
-    [ParticleShape.SNOW]:THEME_COLORS.diamon, 
+    [ParticleShape.SNOW]:THEME_COLORS.ruby, 
     [ParticleShape.ORB]: THEME_COLORS.mint, 
-    spiral: THEME_COLORS.champagne 
+    spiral: THEME_COLORS.diamond 
   });
   
   const [editingShape, setEditingShape] = useState<ParticleShape | 'spiral'>(ParticleShape.STAR);
