@@ -207,7 +207,20 @@ const ParticleLayer: React.FC<{
     const posAttr = pointsRef.current.geometry.attributes.position.array as Float32Array;
     const activeOpenness = isDetected ? openness : (Math.sin(state.clock.elapsedTime * 0.45) * 0.05 + 0.05);
     const lerp = 3.5 * delta;
+    // 获取材质对象
+    const material = pointsRef.current.material as any;
+    
+    // 如果材质存在，就修改它的大小
+    if (material) {
+        // 1. 设置基础大小：平时就很大 (1.2 ~ 1.5)
+        let baseSize = isSpiral ? 1.5 : 1.2; 
+        
+        // 雪花线条细，再额外大一点
+        if (shape === ParticleShape.SNOW) baseSize *= 1.5;
 
+        // 2. 设置动态散开：手张开时，大小增加 6.0 倍
+        material.size = baseSize + (activeOpenness * 6.0); 
+    }
     for (let i = 0; i < posAttr.length / 3; i++) {
       const i3 = i * 3;
       const tx = initialPositions[i3];
